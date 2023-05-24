@@ -21,13 +21,13 @@ public class Main {
             { new Point (0,0), new Point (0, 1), new Point (1,1), new Point (1, 2)}
     };
 
-    static Color blockColors[] = { new Color (200, 10, 10),
+    static Color blockColors[] = { new Color (190, 40, 40),
             new Color (10, 200, 10),
-            new Color (10, 10, 200),
-            new Color (200, 200, 10),
-            new Color (200, 10, 200),
-            new Color (50, 100, 50),
-            new Color (10, 200, 200) };
+            new Color (30, 30, 180),
+            new Color (240, 210, 30),
+            new Color (160, 10, 160),
+            new Color (10, 190, 200),
+            new Color (180, 100, 20) };
 
     static int[][] rotationMatrix = {
             {1, 0, 1, 0 },
