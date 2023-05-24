@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb2db586-c04e-475d-8cec-2b5a80bf23f2" name="Changes" comment="Grund">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="bb2db586-c04e-475d-8cec-2b5a80bf23f2" name="Changes" comment="Grund" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +44,7 @@
       <updated>1683634503319</updated>
       <workItem from="1683634504466" duration="879000" />
       <workItem from="1684236446853" duration="9000000" />
-      <workItem from="1684827435655" duration="5894000" />
+      <workItem from="1684827435655" duration="6221000" />
     </task>
     <task id="LOCAL−00001" summary="Grund">
       <created>1684237729495</created>
@@ -55,11 +52,34 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1684237729495</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL−00002" summary="Grund">
+      <created>1684927017410</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1684927017410</updated>
+    </task>
+    <task id="LOCAL−00003" summary="Grund">
+      <created>1684927200918</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1684927200918</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Grund" />
