@@ -4,12 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Main {
-    private static Point blockShapes[][] = {
+    private final static Point[][] blockShapes = {
             // I -block
         { new Point (0,0), new Point (0, 1), new Point (0,2), new Point (0, -1)},
             // L -block
             { new Point (0,0), new Point (0, -1), new Point (0,1), new Point (1, 1)},
-            // L reversed -block
+            // J -block
             { new Point (0,0), new Point (0, -1), new Point (0,1), new Point (-1, 1)},
             // Cube -block
             { new Point (0,0), new Point (0, 1), new Point (1,0), new Point (1, 1)},
@@ -17,11 +17,11 @@ public class Main {
             { new Point (0,0), new Point (-1, 0), new Point (1,0), new Point (0, 1)},
             // z -block
             { new Point (0,0), new Point (0, 1), new Point (-1,1), new Point (-1, 2)},
-            // reversed z -block
+            // s -block
             { new Point (0,0), new Point (0, 1), new Point (1,1), new Point (1, 2)}
     };
 
-    static Color blockColors[] = { new Color (190, 40, 40),
+    static Color[] blockColors = { new Color (190, 40, 40),
             new Color (10, 200, 10),
             new Color (30, 30, 180),
             new Color (240, 210, 30),
@@ -33,7 +33,7 @@ public class Main {
             {1, 0, 1, 0 },
             {0, -1, 0, 1 },
             {-1, 0, -1, 0 },
-            {0, 1, 0, -1 }    };
+            {0, 1, 0, -1 } };
     static int tileSize = 26;
     static int marginX = 0;
     static int marginY = 36;
@@ -47,6 +47,8 @@ public class Main {
 
     static boolean gameRunning = true;
     static int speed = 240;
+    static int maxSpeed = 50; // Lower speed = faster
+
     static int score = 0;
     static Color[][] pinned = new Color [tilesX][tilesY];
     public static void main(String[] args) {
@@ -58,10 +60,8 @@ public class Main {
                 super.paint(g);
 
                 for (int y = 0; y < tilesY; y++) {
-                    int count = 0;
                     for (int x = 0; x < tilesX; x++) {
                         if (pinned[x][y] == null) continue;
-                        count ++;
                         g.setColor (pinned[x][y]);
                         g.fillRect(x  * tileSize + marginX, y  * tileSize + marginY, tileSize - 1, tileSize - 1);
                     }
@@ -78,10 +78,16 @@ public class Main {
                 }
                 g.setColor (Color.WHITE);
                 g.drawString("Score: " + score, 10, 26);
+
+                if (!gameRunning) {
+                    g.drawString("Press space to play again.", 80, frame.getHeight()/ 2);
+
+                }
             }
         };
-        frame.setContentPane(panel);
-        frame.getContentPane().setBackground(Color.BLACK);
+        frame.getContentPane().add(panel);
+        panel.setBackground(Color.BLACK);
+        //frame.getContentPane().setBackground(Color.BLACK);
         frame.setSize(tilesX * tileSize + frame.FRAMEBITS + marginX * 2, tilesY * tileSize + marginY * 2);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -112,7 +118,7 @@ public class Main {
                         playerPos.y++;
                         frame.repaint();
                     }
-                } else if (e.getKeyCode() == KeyEvent.VK_R) {
+                } else if (e.getKeyCode() == KeyEvent.VK_R || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) {
                     if (playerPice == 3) return; // Cube cant be rotated
                     int oldRotation = rotation;
                     rotation ++;
@@ -165,11 +171,11 @@ public class Main {
         gameRunning = true;
         playerPos = null;
         speed = 240;
+        rotation = 0;
 
         // Clear Pinned
         for (int y = 0; y < tilesY; y ++ ) {
             for (int x = 0; x < tilesX; x ++) {
-
                 pinned[x][y] = null;
             }
         }
@@ -202,13 +208,6 @@ public class Main {
             int y1 = getRotatedY(p);
             pinned[x1][y1] = blockColors[playerPice];
         }
-        playerPos = new Point(tilesX / 2, 1);
-        playerPice = (int) (Math.random() * blockShapes.length);
-
-        if (!posAllowed(0, 0)) {
-            // Game over
-            gameRunning = false;
-        }
 
         // Check if full line
         for (int y = 0; y < tilesY; y ++) {
@@ -223,6 +222,19 @@ public class Main {
                 }
             }
         }
+
+        // randomize new Block
+        playerPos = new Point(tilesX / 2, 1);
+        playerPice = (int) (Math.random() * blockShapes.length);
+        rotation = 0;
+
+        if (!posAllowed(0, 0)) {
+            // Game over
+            gameRunning = false;
+        }
+
+        // Increase speed
+        if (speed > maxSpeed) speed -= 1;
     }
 
     private static void removeFullLines () {
