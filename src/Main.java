@@ -91,6 +91,7 @@ public class Main {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (playerPos == null) return;
+                if (quit) return;
                 if (!gameRunning) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                         // restart game
@@ -154,6 +155,7 @@ public class Main {
                         throw new RuntimeException(e);
                     }
                  }
+                System.exit (0);
             }
         };
 
