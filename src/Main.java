@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 public class Main {
     private final static Point[][] blockShapes = {
             // I -block
@@ -20,7 +19,6 @@ public class Main {
             // s -block
             { new Point (0,0), new Point (0, 1), new Point (1,1), new Point (1, 2)}
     };
-
     static Color[] blockColors = { new Color (190, 40, 40),
             new Color (10, 200, 10),
             new Color (30, 30, 180),
@@ -28,7 +26,6 @@ public class Main {
             new Color (160, 10, 160),
             new Color (10, 190, 200),
             new Color (180, 100, 20) };
-
     static int[][] rotationMatrix = {
             {1, 0, 1, 0 },
             {0, -1, 0, 1 },
@@ -37,22 +34,18 @@ public class Main {
     static int tileSize = 26;
     static int marginX = 0;
     static int marginY = 36;
-
     static int tilesX = 12;
     static int tilesY = 20;
-
     static Point playerPos;
     static int playerPice;
     static int rotation = 0;
-
     static boolean gameRunning = true;
+    static boolean quit = false;
     static int speed = 240;
     static int maxSpeed = 50; // Lower speed = faster
-
     static int score = 0;
     static Color[][] pinned = new Color [tilesX][tilesY];
     public static void main(String[] args) {
-
         JFrame frame = new JFrame("Tetris");
         JPanel panel = new JPanel() {
             @Override
@@ -91,7 +84,6 @@ public class Main {
         frame.setSize(tilesX * tileSize + frame.FRAMEBITS + marginX * 2, tilesY * tileSize + marginY * 2);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -126,6 +118,8 @@ public class Main {
                     if (!posAllowed(0, 0))
                         rotation = oldRotation;
                     frame.repaint();
+                } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    quit = true;
                 }
             }
 
@@ -139,7 +133,7 @@ public class Main {
             public void run() {
                 super.run();
 
-                while (true) {
+                while (!quit) {
                     if (playerPos == null) {
                         playerPos = new Point(tilesX / 2, 2);
                         playerPice = (int) (Math.random() * blockShapes.length);
@@ -166,7 +160,6 @@ public class Main {
         thread.start();
 
     }
-
     private static void newGame () {
         gameRunning = true;
         playerPos = null;
@@ -180,7 +173,6 @@ public class Main {
             }
         }
     }
-
     private static boolean posAllowed (int x, int y) {
         for (Point p:blockShapes[playerPice]) {
             int x1 = getRotatedX (p);
@@ -195,7 +187,6 @@ public class Main {
         }
         return true;
     }
-
     private static int getRotatedX (Point p) {
         return playerPos.x + p.x * rotationMatrix[rotation][0] + p.y * rotationMatrix[rotation][1];
     }
@@ -222,7 +213,6 @@ public class Main {
                 }
             }
         }
-
         // randomize new Block
         playerPos = new Point(tilesX / 2, 1);
         playerPice = (int) (Math.random() * blockShapes.length);
@@ -236,7 +226,6 @@ public class Main {
         // Increase speed
         if (speed > maxSpeed) speed -= 1;
     }
-
     private static void removeFullLines () {
         int lineCount = 0;
         for (int y = 0; y < tilesY; y++) {
@@ -250,7 +239,6 @@ public class Main {
         }
         score += lineCount * lineCount;
     }
-
     private static void removeLine (int line) {
         for (int y = line; y > 0; y--) {
             for (int x = 0; x < tilesX; x ++)
